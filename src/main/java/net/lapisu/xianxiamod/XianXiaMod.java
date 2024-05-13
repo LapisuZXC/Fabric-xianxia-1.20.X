@@ -2,6 +2,9 @@ package net.lapisu.xianxiamod;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.lapisu.xianxiamod.block.ModBlocks;
+import net.lapisu.xianxiamod.item.ModItems;
+import net.lapisu.xianxiamod.item.ModItemsGroups;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +15,8 @@ public class XianXiaMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-
-		LOGGER.info("Hello Fabric world!");
+		ModItemsGroups.registerItemGroups();
+		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
 	}
 }
