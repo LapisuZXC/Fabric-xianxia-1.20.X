@@ -2,11 +2,11 @@ package net.lapisu.xianxiamod.cultivation.stats;
 
 import java.math.BigDecimal;
 
-public enum PlayerCultivatioStats {
+public enum PlayerCultivationStats {
 
     QI(new BigDecimal(0.0),true),
     MAX_QI(new BigDecimal(0.0),true),
-
+    TOTALPOWER(new BigDecimal(0.0), false)
     ;
 
     public final BigDecimal defaulValue;
@@ -14,7 +14,7 @@ public enum PlayerCultivatioStats {
 
 
 
-    PlayerCultivatioStats(BigDecimal defaultValue,boolean isModifiable){
+    PlayerCultivationStats(BigDecimal defaultValue,boolean isModifiable){
         this.defaulValue = defaultValue;
         this.isModifiable= isModifiable;
     }

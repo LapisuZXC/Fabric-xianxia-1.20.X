@@ -1,12 +1,13 @@
 {
   "type":"minecraft:crafting_shapeless",
-  "category": "building",
+  "category": "misc",
   "ingredients": [
     {
       "item": "xianxia-mod:immortal_block"
     }
   ],
   "result": {
-      
+    "item": "xianxia-mod:immortal_stone",
+    "count": 9
   }
 }
