@@ -11,11 +11,7 @@ base {
 }
 
 repositories {
-	//ForLibGui
-	maven {
-		name = "CottonMC"
-		url = "https://server.bbkr.space/artifactory/libs-release"
-	}
+
 }
 
 fabricApi {
@@ -31,9 +27,6 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	//for LibGui
-	modImplementation include("io.github.cottonmc:LibGui:8.1.1+1.20.1")
-	
 }
 
 processResources {

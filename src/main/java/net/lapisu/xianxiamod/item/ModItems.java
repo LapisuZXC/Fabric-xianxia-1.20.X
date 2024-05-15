@@ -20,7 +20,7 @@ public class ModItems {
 
     public static final Item IMMORTAL_STONE = registerItem("immortal_stone", new Item(new FabricItemSettings()));
 
-    public static final Item GUI_ITEM = registerItem("gui_item", new GuiItem(new FabricItemSettings()));
+    public static final Item GUI_ITEM = registerItem("gui_item", new Item(new FabricItemSettings()));
 
     public static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries){
         entries.add(IMMORTAL_STONE);
