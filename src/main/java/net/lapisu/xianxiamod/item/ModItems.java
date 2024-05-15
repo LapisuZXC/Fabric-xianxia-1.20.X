@@ -5,20 +5,28 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.lapisu.xianxiamod.XianXiaMod;
 import net.lapisu.xianxiamod.block.ModBlocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.World;
 
 public class ModItems {
 
     public static final Item IMMORTAL_STONE = registerItem("immortal_stone", new Item(new FabricItemSettings()));
 
+    public static final Item GUI_ITEM = registerItem("gui_item", new GuiItem(new FabricItemSettings()));
+
     public static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries){
         entries.add(IMMORTAL_STONE);
-        entries.add(ModBlocks.IMMORTAL_BLOCK);
     }
+
+
 
     public  static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(XianXiaMod.MOD_ID,name), item);

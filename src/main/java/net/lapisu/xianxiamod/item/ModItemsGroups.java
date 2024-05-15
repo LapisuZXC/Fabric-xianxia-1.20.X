@@ -18,6 +18,7 @@ public class ModItemsGroups {
                     .icon(() -> new ItemStack(ModItems.IMMORTAL_STONE)).entries((displayContext, entries) -> {
                         entries.add(ModItems.IMMORTAL_STONE);
                         entries.add(ModBlocks.IMMORTAL_BLOCK);
+                        entries.add(ModItems.GUI_ITEM);
                     }).build());
 
     public static void registerItemGroups(){

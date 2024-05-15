@@ -1,0 +1,6 @@
+{
+  "parent": "item/gui_item",
+  "textures": {
+    "layer0": "xianxia-mod:item/gui_item"
+  }
+}
