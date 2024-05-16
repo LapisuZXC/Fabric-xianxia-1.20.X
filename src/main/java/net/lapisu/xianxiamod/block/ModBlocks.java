@@ -31,4 +31,11 @@ public class ModBlocks {
         XianXiaMod.LOGGER.info("Registring blocks for" + XianXiaMod.MOD_ID);
     }
 
+    public static int add(int var1, int var2){
+        return var1 + var2;
+    }
+
+
+
+
 }

@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.lapisu.xianxiamod.XianXiaMod;
 import net.lapisu.xianxiamod.block.ModBlocks;
+import net.lapisu.xianxiamod.item.complexitems.GuiItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -20,7 +21,7 @@ public class ModItems {
 
     public static final Item IMMORTAL_STONE = registerItem("immortal_stone", new Item(new FabricItemSettings()));
 
-    public static final Item GUI_ITEM = registerItem("gui_item", new Item(new FabricItemSettings()));
+    public static final Item GUI_ITEM = registerItem("gui_item", new GuiItem(new FabricItemSettings()));
 
     public static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries){
         entries.add(IMMORTAL_STONE);
