@@ -9,13 +9,17 @@ import net.minecraft.screen.ScreenHandlerType;
 import org.jetbrains.annotations.Nullable;
 
 public class StatsScreenHandler extends ScreenHandler {
-
-
-    public StatsScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId) {
-        super(type, syncId);
-    }
+    public PlayerInventory playerInventory;
+    public PlayerEntity player;
+    public static ScreenHandlerType<?> STATS_SCREEN_HANDLER_TYPE = XianXiaMod.STATS_SCREEN_HANDLER;
     public StatsScreenHandler(int syncId, PlayerInventory playerInventory) {
-        super(XianXiaMod.STATS_SCREEN_HANDLER_TYPE, syncId);
+        super(STATS_SCREEN_HANDLER_TYPE, syncId);
+    }
+
+    public StatsScreenHandler(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+        super(STATS_SCREEN_HANDLER_TYPE,syncId);
+        this.playerInventory = playerInventory;
+        this.player = player;
     }
 
 
