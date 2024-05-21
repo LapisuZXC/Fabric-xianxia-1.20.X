@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.slot.Slot;
 import org.jetbrains.annotations.Nullable;
 
 public class StatsScreenHandler extends ScreenHandler {
@@ -18,8 +19,17 @@ public class StatsScreenHandler extends ScreenHandler {
 
     public StatsScreenHandler(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         super(STATS_SCREEN_HANDLER_TYPE,syncId);
-        this.playerInventory = playerInventory;
-        this.player = player;
+        int m;
+        int l;
+        for(m = 0; m < 3; ++m) {
+            for(l = 0; l < 9; ++l) {
+                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
+            }
+        }
+
+        for(m = 0; m < 9; ++m) {
+            this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
+        }
     }
 
 
@@ -30,6 +40,6 @@ public class StatsScreenHandler extends ScreenHandler {
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return false;
+        return true;
     }
 }

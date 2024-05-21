@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class XianXiaMod implements ModInitializer {
 	public static final String MOD_ID = "xianxia-mod";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static final Identifier STATS_SCREEN_ID = new Identifier(MOD_ID, "stats_screen");
+	public static final Identifier STATS_SCREEN_ID = new Identifier(MOD_ID, "statsscreen");
 	public static final ScreenHandlerType<StatsScreenHandler> STATS_SCREEN_HANDLER= new ScreenHandlerType<>(StatsScreenHandler::new, FeatureFlags.VANILLA_FEATURES);
 
 

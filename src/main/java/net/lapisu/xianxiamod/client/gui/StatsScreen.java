@@ -6,7 +6,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+
 
 public class StatsScreen extends HandledScreen<StatsScreenHandler> {
     private static final Identifier TEXTURE = new Identifier("minecraft", "textures/gui/container/dispenser.png");
