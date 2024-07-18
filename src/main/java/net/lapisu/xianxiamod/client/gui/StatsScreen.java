@@ -1,11 +1,18 @@
 package net.lapisu.xianxiamod.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.lapisu.xianxiamod.XianXiaModClient;
+import net.lapisu.xianxiamod.cultivation.Cultivation;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class StatsScreen extends HandledScreen<StatsScreenHandler> {
@@ -13,6 +20,7 @@ public class StatsScreen extends HandledScreen<StatsScreenHandler> {
 
 
     public StatsScreen(StatsScreenHandler handler, PlayerInventory inventory, Text title) {
+
         super(handler, inventory, title);
     }
 
@@ -37,6 +45,20 @@ public class StatsScreen extends HandledScreen<StatsScreenHandler> {
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
         drawContext.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
+    }
+
+    @Override
+    protected void drawForeground(DrawContext drawContext, int mouseX, int mouseY){
+        List<String> strings = new ArrayList<String>();
+        XianXiaModClient.PLAYER
+
+
+        for (Double b : stat){
+            strings.add(b.toString());
+        }
+        this.textRenderer.draw(strings.get(0), (float) x + 20, (float) y + 20, 0xFFFFFF, false,
+                drawContext.getMatrices().peek().getPositionMatrix(), drawContext.getVertexConsumers() ,
+                TextRenderer.TextLayerType.NORMAL, 0x000000, 0);
     }
 
 }

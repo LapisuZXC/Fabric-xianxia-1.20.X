@@ -2,20 +2,28 @@ package net.lapisu.xianxiamod.cultivation.stats;
 
 import java.math.BigDecimal;
 
-public enum PlayerCultivationStats {
+public class PlayerCultivationStats extends Stats {
 
-    QI(new BigDecimal(0.0),true),
-    MAX_QI(new BigDecimal(0.0),true),
-    TOTALPOWER(new BigDecimal(0.0), false)
-    ;
+    private BigDecimal qiModifier = new BigDecimal("20.0");
+    private BigDecimal energyShieldModifier = new BigDecimal("0.0");
 
-    public final BigDecimal defaulValue;
-    public final boolean isModifiable;
+    public PlayerCultivationStats(BigDecimal defaultValue, boolean isModifiable){
+        super(defaultValue, isModifiable);
+    }
 
+    public BigDecimal getQiModifier(){
+        return this.qiModifier;
+    }
 
+    public void setQiModifier(BigDecimal qiModifier){
+        this.qiModifier = qiModifier;
+    }
 
-    PlayerCultivationStats(BigDecimal defaultValue,boolean isModifiable){
-        this.defaulValue = defaultValue;
-        this.isModifiable= isModifiable;
+    public BigDecimal getEnergyShieldModifier(){
+        return this.energyShieldModifier;
+    }
+
+    public void setEnergyShieldModifier(BigDecimal energyShieldModifier){
+        this.energyShieldModifier = energyShieldModifier;
     }
 }
