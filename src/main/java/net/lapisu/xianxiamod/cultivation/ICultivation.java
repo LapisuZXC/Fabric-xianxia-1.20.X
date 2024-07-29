@@ -3,25 +3,29 @@ package net.lapisu.xianxiamod.cultivation;
 import net.lapisu.xianxiamod.cultivation.stats.PlayerBodyStats;
 import net.lapisu.xianxiamod.cultivation.stats.PlayerCultivationStats;
 import net.lapisu.xianxiamod.cultivation.stats.PlayerSoulStats;
-
-import java.math.BigDecimal;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 
 public interface ICultivation {
 
-
+    public PlayerEntity getPlayerEntity();
     // 3 systems: Body, Energy and Soul
 
 
-    public BigDecimal[] getBodyStats(PlayerBodyStats stat);
+    public float getBodyStats();
 
-    public void setBodyStats(PlayerBodyStats stat, BigDecimal[] stats);
 
-    public BigDecimal[] getCultivationStats(PlayerCultivationStats stat);
 
-    public void setCultivationStats(PlayerCultivationStats stat, BigDecimal[] stats);
+    public void updateBodyStats();
 
-    public BigDecimal[] getSoulStats(PlayerSoulStats stat);
+    public float getCultivationStats();
 
-    public void setSoulStats(PlayerSoulStats stat, BigDecimal[] stats);
+    public void setCultivationStats(PlayerCultivationStats stat);
+
+    public float[] getSoulStats();
+
+    public void setSoulStats(PlayerSoulStats stat);
+
+    public float calculateTotalPower(PlayerCultivationStats stat, PlayerBodyStats bodyStats, PlayerSoulStats soulStats);
 
 }

@@ -1,20 +1,28 @@
 package net.lapisu.xianxiamod.cultivation.stats;
 
-import java.math.BigDecimal;
+
 
 public class Stats {
-    public BigDecimal defaultValue = new BigDecimal("0.0");
-    public boolean isModifiable = true;
+    private float defaultValue;
+    private boolean isModifiable;
 
-    Stats(BigDecimal defaultValue, boolean isModifiable){
-        this.defaultValue = defaultValue;
-        this.isModifiable = isModifiable;
+    Stats(){
+        this.defaultValue = 0.0f;
+        this.isModifiable = true;
     }
-    public BigDecimal getStats(){
+    public float getStats(){
         return this.defaultValue;
     }
 
-    public void setStats(BigDecimal stats){
+    public void setStats(float stats){
         this.defaultValue = stats;
+    }
+
+    public void suspendStat(){
+        this.isModifiable = false;
+    }
+
+    public void resumeStat(){
+        this.isModifiable = true;
     }
 }

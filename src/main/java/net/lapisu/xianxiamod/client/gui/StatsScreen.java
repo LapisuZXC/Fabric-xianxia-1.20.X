@@ -1,65 +1,75 @@
 package net.lapisu.xianxiamod.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.lapisu.xianxiamod.XianXiaModClient;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.lapisu.xianxiamod.cultivation.Cultivation;
-import net.minecraft.client.font.TextRenderer;
+import net.lapisu.xianxiamod.mixininterfaces.PlayerMixinInterface;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class StatsScreen extends HandledScreen<StatsScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/gui/container/dispenser.png");
+@Environment(EnvType.CLIENT)
+public class StatsScreen extends Screen {
+
+    public static final Identifier BACKGROUND_TEXTURE = new Identifier("textures/gui/stats.png");
+    public static final String STATS_SCREEN_ID = "stats_screen";
+
+    private PlayerEntity playerEntity;
+    private Cultivation cultivation;
+    private int backgroundWidth = 200;
+    private int backgroundHeight = 215;
+    private int x;
+    private int y;
 
 
-    public StatsScreen(StatsScreenHandler handler, PlayerInventory inventory, Text title) {
-
-        super(handler, inventory, title);
-    }
-
-
-    @Override
-    public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
-        renderBackground(drawContext);
-        super.render(drawContext, mouseX, mouseY, delta);
-        drawMouseoverTooltip(drawContext, mouseX, mouseY);
+    public StatsScreen() {
+        super(Text.translatable("screen.xianxiamod.stats"));
     }
 
     @Override
     protected void init() {
         super.init();
-        // Center the title
-        titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
+        this.playerEntity = this.client.player;
+        this.cultivation = ((PlayerMixinInterface) this.playerEntity).getCultivation();
+        this.x = (this.width - this.backgroundWidth) / 2;
+        this.y = (this.height - this.backgroundHeight) / 2;
     }
 
     @Override
-    protected void drawBackground(DrawContext drawContext, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        int x = (width - backgroundWidth) / 2;
-        int y = (height - backgroundHeight) / 2;
-        drawContext.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
+    public boolean shouldPause() {
+        return false;
     }
 
     @Override
-    protected void drawForeground(DrawContext drawContext, int mouseX, int mouseY){
-        List<String> strings = new ArrayList<String>();
-        XianXiaModClient.PLAYER
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackground(context);
+        int i = (this.width - this.backgroundWidth) / 2;
+        int j = (this.height - this.backgroundHeight) / 2;
+        context.drawTexture(BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight);
+
+        if (this.client.player != null) {
+            //int scaledWidth = this.client.getWindow().getScaledWidth();
+            //int scaledHeight = this.client.getWindow().getScaledHeight();
+            //InventoryScreen.drawEntity(context, scaledWidth / 2 - 75, scaledHeight / 2 - 40, 30, -28, 0, this.client.player);
+
+            // Top label
+            Text playerName = Text.translatable("text.levelz.gui.title", playerEntity.getName().getString());
+            context.drawText(this.textRenderer, playerName, this.x - this.textRenderer.getWidth(playerName) / 2 + 120, this.y + 7, 0x3F3F3F, false);
+
+            String str = "HP:" + " " + cultivation.getBodyStats();
+            context.drawText(this.textRenderer, Text.literal(str), this.x - this.textRenderer.getWidth(str) / 2 + 120, this.y + 25, 0x3F3F3F, false);
 
 
-        for (Double b : stat){
-            strings.add(b.toString());
+            //hp
+
+
         }
-        this.textRenderer.draw(strings.get(0), (float) x + 20, (float) y + 20, 0xFFFFFF, false,
-                drawContext.getMatrices().peek().getPositionMatrix(), drawContext.getVertexConsumers() ,
-                TextRenderer.TextLayerType.NORMAL, 0x000000, 0);
+
+
     }
-
 }
-

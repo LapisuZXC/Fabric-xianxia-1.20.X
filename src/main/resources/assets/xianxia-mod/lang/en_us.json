@@ -3,5 +3,8 @@
 
   "block.xianxia-mod.immortal_block": "Immortal Stone",
 
-  "itemgroup.xianxia": "Lapisu's XianXia Mod"
+  "itemgroup.xianxia": "Lapisu's XianXia Mod",
+
+
+  "screen.xianxiamod.stats": "Stats"
 }

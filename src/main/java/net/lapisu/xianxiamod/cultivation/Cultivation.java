@@ -4,57 +4,158 @@ import net.lapisu.xianxiamod.cultivation.stats.PlayerBodyStats;
 import net.lapisu.xianxiamod.cultivation.stats.PlayerCultivationStats;
 import net.lapisu.xianxiamod.cultivation.stats.PlayerSoulStats;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
+import net.lapisu.xianxiamod.mixin.PlayerEntityMixin;
+import net.lapisu.xianxiamod.mixininterfaces.PlayerMixinInterface;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.Text;
+import org.jetbrains.annotations.NotNull;
+
 
 public class Cultivation implements ICultivation{
-    protected HashMap<String, BigDecimal> stats = new HashMap<String, BigDecimal>(5);
+    protected NbtCompound stats = new NbtCompound();
+    protected NbtCompound rawStats = new NbtCompound();
 
-    public Cultivation() {
-        stats.put("qi", BigDecimal.ZERO);
-        stats.put("hp", BigDecimal.ZERO);
-        stats.put("soulhp", BigDecimal.ZERO);
-        stats.put("soulqi", BigDecimal.ZERO);
-        stats.put("totalpower", BigDecimal.ZERO);
+
+    public PlayerBodyStats playerBodyStats = new PlayerBodyStats();
+    public PlayerCultivationStats playerCultivationStats;
+    public PlayerSoulStats playerSoulStats;
+    private final PlayerEntity playerEntity;
+
+
+
+
+
+    public Cultivation(PlayerEntity playerEntity) {
+        //set all modifiers stats to 0
+        this.rawStats.putFloat("Strength", 0.0f);
+        this.rawStats.putFloat("Agility", 0.0f);
+        this.rawStats.putFloat("Spirit", 0.0f);
+
+        //set all scalable stats to 0
+        this.stats.putFloat("qi", 0.0f);
+        this.stats.putFloat("hp", 0.0f);
+        this.stats.putFloat("soulhp", 0.0f);
+        this.stats.putFloat("soulqi", 0.0f);
+        this.stats.putFloat("totalpower", 0.0f);
+        //just in case
+        this.playerEntity =  playerEntity;
+
+
+    }
+
+    public void writeNbt(@NotNull NbtCompound nbt) {
+        nbt.put("stats", this.stats);
+        nbt.put("rawstats", this.rawStats);
+    }
+
+    public void readNbt(@NotNull NbtCompound nbt) {
+        this.stats = nbt.getCompound("stats");
+        this.rawStats = nbt.getCompound("rawstats");
+    }
+    public PlayerEntity getPlayerEntity() {
+        return playerEntity;
+    }
+
+
+    @Override
+    public float getBodyStats() {
+        return this.stats.getFloat("hp");
+    }
+
+    @Override
+    public void updateBodyStats() {
+        Cultivation cultivation = ((PlayerMixinInterface)playerEntity).getCultivation();
+        this.rawStats.putFloat("Strength", cultivation.playerBodyStats.getStrenghtValue());
+        this.stats.putFloat("hp", cultivation.playerBodyStats.getStrenghtValue() * cultivation.playerBodyStats.getHpModifier());
     }
 
 
 
 
     @Override
-    public BigDecimal[] getBodyStats(PlayerBodyStats stat) {
-        return new BigDecimal[]{stats.get("hp")};
+    public float getCultivationStats() {
+        return  this.stats.getFloat("qi");
     }
 
     @Override
-    public void setBodyStats(PlayerBodyStats stat, BigDecimal[] stats) {
-        if (stat.getStats() != BigDecimal.ZERO) {
-            this.stats.replace("hp", stat.getStats().multiply(stat.getHpModifier()));
+    public void setCultivationStats(PlayerCultivationStats stat) {
+        if (stat.getStats() > 0) {
+
+            this.stats.putFloat("qi", stat.getStats() * stat.getQiModifier());
         }
     }
 
-
-    public BigDecimal[] getCultivationStats(PlayerCultivationStats stat) {
-        return new BigDecimal[]{stats.get("qi")};
+    @Override
+    public float[] getSoulStats() {
+        return new float[]{this.stats.getFloat("soulhp"), this.stats.getFloat("soulqi")};
     }
 
     @Override
-    public void setCultivationStats(PlayerCultivationStats stat, BigDecimal[] stats) {
-        if (stat.getStats() != BigDecimal.ZERO) {
-            this.stats.replace("qi", stat.getStats().multiply(stat.getQiModifier()));
+    public void setSoulStats(PlayerSoulStats stat) {
+        if (stat.getStats() > 0) {
+            this.stats.putFloat("soulhp", stat.getStats() * stat.getSoulHPModifier());
+            this.stats.putFloat("soulqi", stat.getStats() * stat.getSoulQiModifier());
         }
     }
 
     @Override
-    public BigDecimal[] getSoulStats(PlayerSoulStats stat) {
-        return new BigDecimal[]{stats.get("soulhp"), stats.get("soulqi")};
+    public float calculateTotalPower(PlayerCultivationStats stat, PlayerBodyStats bodyStats, PlayerSoulStats soulStats) {
+        return 0;
     }
 
-    @Override
-    public void setSoulStats(PlayerSoulStats stat, BigDecimal[] stats) {
-        if (stat.getStats() != BigDecimal.ZERO) {
-            this.stats.replace("soulhp", stat.getStats().multiply(stat.getSoulHPModifier()));
-            this.stats.replace("soulqi", stat.getStats().multiply(stat.getSoulQiModifier()));
+    public Text TrainBody(PlayerBodyStats playerBodyStats) {
+        switch (playerBodyStats.getStage()) {
+            case MORTAL:
+                if (playerBodyStats.getStats() < playerBodyStats.getStage().getStageMaximum()) {
+                    playerBodyStats.setStats(playerBodyStats.getStats() + 0.5f);
+                    return Text.literal("Training Completed. Body Stats: " + playerBodyStats.getStats());
+                } else {
+                    return Text.literal("You have reached maximum of mortal world. Body Stats: " + playerBodyStats.getStats());
+                }
+
+
+            case BODY_BASIC_REINFORCEMENT:
+                if (playerBodyStats.getStats() < playerBodyStats.getStage().getStageMaximum()) {
+                    playerBodyStats.setStats(playerBodyStats.getStats() + 1.0f);
+                    return Text.literal("Training Completed. Body Stats: " + playerBodyStats.getStats());
+                } else {
+                    return Text.literal("You have reached maximum of your world. Body Stats: " + playerBodyStats.getStats());
+                }
+
+            case BODY_ADVANCED_REINFORCEMENT:
+                if (playerBodyStats.getStats() < playerBodyStats.getStage().getStageMaximum()) {
+                    playerBodyStats.setStats(playerBodyStats.getStats() + 2.0f);
+                    return Text.literal("Training Completed. Body Stats: " + playerBodyStats.getStats());
+                } else {
+                    return Text.literal("You have reached maximum of your world. Body Stats: " + playerBodyStats.getStats());
+                }
+
+            case BODY_TRANSFORMATION:
+                if (playerBodyStats.getStats() < playerBodyStats.getStage().getStageMaximum()) {
+                    playerBodyStats.setStats(playerBodyStats.getStats() + 4.0f);
+                    return Text.literal("Training Completed. Body Stats: " + playerBodyStats.getStats());
+                } else {
+                    return Text.literal("You have reached maximum of your world. Body Stats: " + playerBodyStats.getStats());
+                }
+
+            case EIGHT_GATES:
+                if (playerBodyStats.getStats() < playerBodyStats.getStage().getStageMaximum()) {
+                    playerBodyStats.setStats(playerBodyStats.getStats() + 8.0f);
+                    return Text.literal("Training Completed. Body Stats: " + playerBodyStats.getStats());
+                } else {
+                    return Text.literal("You have reached maximum of your world. Body Stats:" + playerBodyStats.getStats());
+                }
+
+            case BODY_ASCENSION:
+                if (playerBodyStats.getStats() < playerBodyStats.getStage().getStageMaximum()) {
+                    playerBodyStats.setStats(playerBodyStats.getStats() + 16.0f);
+                    return Text.literal("Training Completed. Body Stats:" + playerBodyStats.getStats());
+                } else {
+                    return Text.literal("You have reached maximum of Body cultivation. Body Stats:" + playerBodyStats.getStats());
+                }
         }
+        return Text.literal("CRITICAL ERROR INSIDE TRAIN BODY");
     }
+
 }
