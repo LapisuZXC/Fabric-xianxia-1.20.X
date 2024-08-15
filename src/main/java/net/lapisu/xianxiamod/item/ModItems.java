@@ -4,6 +4,8 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.lapisu.xianxiamod.XianXiaMod;
+import net.lapisu.xianxiamod.item.attack.ExplosivePunch;
+import net.lapisu.xianxiamod.item.complexitems.CultivationIncreaser;
 import net.lapisu.xianxiamod.item.complexitems.GuiItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -17,8 +19,15 @@ public class ModItems {
 
     public static final Item GUI_ITEM = registerItem("gui_item", new GuiItem(new FabricItemSettings()));
 
+    public static final Item CULTIVATION_INCREASER = registerItem("cultivation_increaser", new CultivationIncreaser(new FabricItemSettings()));
+
+    public static final Item EXPLOSIVE_PUNCH = registerItem("explosive_punch", new ExplosivePunch(new FabricItemSettings()));
+
     public static void addItemsToIngredientItemGroup(FabricItemGroupEntries entries){
         entries.add(IMMORTAL_STONE);
+        entries.add(GUI_ITEM);
+        entries.add(CULTIVATION_INCREASER);
+        entries.add(EXPLOSIVE_PUNCH);
     }
 
 

@@ -19,6 +19,8 @@ public class ModItemsGroups {
                         entries.add(ModItems.IMMORTAL_STONE);
                         entries.add(ModBlocks.IMMORTAL_BLOCK);
                         entries.add(ModItems.GUI_ITEM);
+                        entries.add(ModItems.CULTIVATION_INCREASER);
+                        entries.add(ModItems.EXPLOSIVE_PUNCH);
                     }).build());
 
     public static void registerItemGroups(){

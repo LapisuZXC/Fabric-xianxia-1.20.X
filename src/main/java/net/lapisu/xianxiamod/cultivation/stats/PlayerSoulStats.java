@@ -3,7 +3,9 @@ package net.lapisu.xianxiamod.cultivation.stats;
 
 
 public class PlayerSoulStats extends Stats{
-    // change to float everywhere
+
+    private float soulHPValue = 0.0f;
+    private float soulQiValue = 0.0f;
     private float soulHPModifier = 0.0f;
     private float SoulQiModifier = 0.0f;
 
@@ -19,6 +21,24 @@ public class PlayerSoulStats extends Stats{
 
     public PlayerSoulStats(){
         super();
+        this.setStats((this.getSoulHPValue() + this.getSoulQiValue()) / 2.0f);
+    }
+
+
+    public float getSoulHPValue(){
+        return this.soulHPValue;
+    }
+
+    public void setSoulHPValue(float soulHPValue){
+        this.soulHPValue = soulHPValue;
+    }
+
+    public float getSoulQiValue(){
+        return this.soulQiValue;
+    }
+
+    public void setSoulQiValue(float soulQiValue){
+        this.soulQiValue = soulQiValue;
     }
 
     public float getSoulHPModifier(){

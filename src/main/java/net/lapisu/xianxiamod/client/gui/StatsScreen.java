@@ -28,7 +28,7 @@ public class StatsScreen extends Screen {
 
 
     public StatsScreen() {
-        super(Text.translatable("screen.xianxiamod.stats"));
+        super(Text.translatable("screen.xianxia-mod.stats"));
     }
 
     @Override
@@ -58,15 +58,20 @@ public class StatsScreen extends Screen {
             //InventoryScreen.drawEntity(context, scaledWidth / 2 - 75, scaledHeight / 2 - 40, 30, -28, 0, this.client.player);
 
             // Top label
-            Text playerName = Text.translatable("text.levelz.gui.title", playerEntity.getName().getString());
+            Text playerName = Text.translatable("text.xianxia-mod.gui.title", playerEntity.getName().getString());
             context.drawText(this.textRenderer, playerName, this.x - this.textRenderer.getWidth(playerName) / 2 + 120, this.y + 7, 0x3F3F3F, false);
 
-            String str = "HP:" + " " + cultivation.getBodyStats();
-            context.drawText(this.textRenderer, Text.literal(str), this.x - this.textRenderer.getWidth(str) / 2 + 120, this.y + 25, 0x3F3F3F, false);
+            String hpstr = "HP:" + " " + cultivation.getBodyStats();
+            context.drawText(this.textRenderer, Text.literal(hpstr), this.x - this.textRenderer.getWidth(hpstr) / 2 + 120, this.y + 25, 0x3F3F3F, false);
 
 
             //hp
 
+            String qistr = "Qi:" + " " + cultivation.getSoulQiStats();
+            context.drawText(this.textRenderer, Text.literal(qistr), this.x - this.textRenderer.getWidth(qistr) / 2 + 120, this.y + 45, 0x3F3F3F, false);
+
+            String soulhpstr = "Soul HP:" + " " + cultivation.getSoulHPStats();
+            context.drawText(this.textRenderer, Text.literal(soulhpstr), this.x - this.textRenderer.getWidth(soulhpstr) / 2 + 120, this.y + 65, 0x3F3F3F, false);
 
         }
 

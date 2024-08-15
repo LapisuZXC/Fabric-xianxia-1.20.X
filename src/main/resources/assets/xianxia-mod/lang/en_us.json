@@ -6,5 +6,7 @@
   "itemgroup.xianxia": "Lapisu's XianXia Mod",
 
 
-  "screen.xianxiamod.stats": "Stats"
+  "screen.xianxia-mod.stats": "Stats",
+
+  "text.xianxia-mod.gui.title": "Stats Screen"
 }

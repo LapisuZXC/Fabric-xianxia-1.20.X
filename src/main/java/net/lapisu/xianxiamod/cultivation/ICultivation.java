@@ -20,11 +20,13 @@ public interface ICultivation {
 
     public float getCultivationStats();
 
-    public void setCultivationStats(PlayerCultivationStats stat);
+    public void updateCultivationStats();
 
-    public float[] getSoulStats();
+    public float getSoulHPStats();
 
-    public void setSoulStats(PlayerSoulStats stat);
+    public float getSoulQiStats();
+
+    public void updateSoulStats();
 
     public float calculateTotalPower(PlayerCultivationStats stat, PlayerBodyStats bodyStats, PlayerSoulStats soulStats);
 

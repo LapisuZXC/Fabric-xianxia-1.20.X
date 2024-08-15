@@ -30,7 +30,9 @@ public class Cultivation implements ICultivation{
         //set all modifiers stats to 0
         this.rawStats.putFloat("Strength", 0.0f);
         this.rawStats.putFloat("Agility", 0.0f);
+        this.rawStats.putFloat("Energy", 0.0f);
         this.rawStats.putFloat("Spirit", 0.0f);
+        this.rawStats.putFloat("Soul Power", 0.0f);
 
         //set all scalable stats to 0
         this.stats.putFloat("qi", 0.0f);
@@ -67,6 +69,7 @@ public class Cultivation implements ICultivation{
     public void updateBodyStats() {
         Cultivation cultivation = ((PlayerMixinInterface)playerEntity).getCultivation();
         this.rawStats.putFloat("Strength", cultivation.playerBodyStats.getStrenghtValue());
+        this.stats.remove("hp");
         this.stats.putFloat("hp", cultivation.playerBodyStats.getStrenghtValue() * cultivation.playerBodyStats.getHpModifier());
     }
 
@@ -79,25 +82,35 @@ public class Cultivation implements ICultivation{
     }
 
     @Override
-    public void setCultivationStats(PlayerCultivationStats stat) {
-        if (stat.getStats() > 0) {
+    public void updateCultivationStats() {
 
-            this.stats.putFloat("qi", stat.getStats() * stat.getQiModifier());
-        }
+        Cultivation cultivation = ((PlayerMixinInterface)playerEntity).getCultivation();
+        this.rawStats.putFloat("Energy", cultivation.playerCultivationStats.getStats());
+        this.stats.remove("qi");
+        this.stats.putFloat("qi", cultivation.playerCultivationStats.getStats() * cultivation.playerCultivationStats.getQiModifier());
     }
 
     @Override
-    public float[] getSoulStats() {
-        return new float[]{this.stats.getFloat("soulhp"), this.stats.getFloat("soulqi")};
+    public float getSoulHPStats() {
+        return this.stats.getFloat("soulhp");
     }
 
     @Override
-    public void setSoulStats(PlayerSoulStats stat) {
-        if (stat.getStats() > 0) {
-            this.stats.putFloat("soulhp", stat.getStats() * stat.getSoulHPModifier());
-            this.stats.putFloat("soulqi", stat.getStats() * stat.getSoulQiModifier());
-        }
+    public float getSoulQiStats() {
+        return this.stats.getFloat("soulqi");
     }
+
+    @Override
+    public void updateSoulStats() {
+        Cultivation cultivation = ((PlayerMixinInterface)playerEntity).getCultivation();
+
+        this.rawStats.putFloat("Soul Power", cultivation.playerSoulStats.getStats());
+        this.stats.remove("soulhp");
+        this.stats.putFloat("soulhp", cultivation.playerSoulStats.getStats() * cultivation.playerSoulStats.getSoulHPModifier());
+        this.stats.remove("soulqi");
+        this.stats.putFloat("soulqi", cultivation.playerSoulStats.getStats() * cultivation.playerSoulStats.getSoulQiModifier());
+    }
+
 
     @Override
     public float calculateTotalPower(PlayerCultivationStats stat, PlayerBodyStats bodyStats, PlayerSoulStats soulStats) {

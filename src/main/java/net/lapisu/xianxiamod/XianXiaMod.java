@@ -4,15 +4,15 @@ import net.fabricmc.api.ModInitializer;
 
 
 import net.lapisu.xianxiamod.block.ModBlocks;
-import net.lapisu.xianxiamod.client.gui.StatsScreen;
+import net.lapisu.xianxiamod.cultivation.CultivationAttributes;
 import net.lapisu.xianxiamod.item.ModItems;
 import net.lapisu.xianxiamod.item.ModItemsGroups;
 import net.minecraft.client.MinecraftClient;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
-import net.minecraft.screen.ScreenHandlerType;
+
 
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -29,10 +29,12 @@ public class XianXiaMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
-
 		ModItemsGroups.registerItemGroups();
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
+	}
+	public static void registerAttributes() {
+		Registry.register(Registries.ATTRIBUTE, CultivationAttributes.soulHealthId, CultivationAttributes.SOUL_HEALTH);
+		Registry.register(Registries.ATTRIBUTE, CultivationAttributes.QiId, CultivationAttributes.QI);
 	}
 }

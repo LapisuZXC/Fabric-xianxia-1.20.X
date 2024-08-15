@@ -1,22 +1,19 @@
 package net.lapisu.xianxiamod.mixin;
 
-import com.mojang.authlib.GameProfile;
 import net.lapisu.xianxiamod.cultivation.Cultivation;
+import net.lapisu.xianxiamod.cultivation.CultivationAttributes;
 import net.lapisu.xianxiamod.mixininterfaces.PlayerMixinInterface;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Objects;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerMixinInterface {
@@ -41,5 +38,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerMi
     @Override
     public Cultivation getCultivation() {
         return this.cultivation;
+    }
+
+
+    @Inject(
+            method = "createPlayerAttributes",
+            require = 1, allow = 1, at = @At("RETURN"))
+    private static void addAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
+        for (var attribute: CultivationAttributes.attributes) {
+            cir.getReturnValue().add(attribute);
+        }
     }
 }

@@ -43,7 +43,7 @@ public class PlayerBodyStats extends Stats{
 
     public PlayerBodyStats(){
         super();
-        this.setStats((getStrenghtValue() + getAgilityValue()) / 2.0f);
+        this.setStats((this.getStrenghtValue() + this.getAgilityValue()) / 2.0f);
     }
 
 
